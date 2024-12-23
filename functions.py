@@ -1,6 +1,7 @@
 '''
 подключаемый файл с функциями,
-необходимыми для подсчёта символов в файле, нагрузки на пальцы
+необходимыми для подсчёта символов в файле,
+нагрузки на пальцы, визуализации результатов
 '''
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,7 +12,6 @@ def characters_in_file_counter(filenames):
     получает: названия файлов
     возвращает словари:
     chars - 'символ': количество повторений
-    words - 'слово': количество повторений
     '''
 
     chars = {}
@@ -48,10 +48,6 @@ def scancode_from_char(char, the_dict):
         if char == key:
             return scancode[0]
 
-# def two_letters_scancodes_vychytator(letter1, letter2, imported_layout_map):
-# return int(scancode_from_char(letter1, imported_layout_map)) -
-# int(scancode_from_char(letter2, imported_layout_map))
-
 
 def load_calculator(chars_dict, imported_layout_map, data):
     '''
@@ -59,7 +55,9 @@ def load_calculator(chars_dict, imported_layout_map, data):
     словарь - 'символ': количество
     словарь - 'символ': 'сканкод клавиши'
     файл со словарями соответствия сканкодов - цены/пальца
-    возвращает: словарь 'final_fingers_load' - 'палец': нагрузка
+    возвращает:
+    словарь 'final_fingers_load' - 'палец': нагрузка
+    словарь 'final_hands_load' - 'рука': нагрузка
     '''
 
     # возвращаемый словарь
@@ -120,23 +118,27 @@ def load_calculator(chars_dict, imported_layout_map, data):
 
 
 def formated_fingers_result_out(the_dict):
+    '''
+    получает:
+    словарь - 'палец': нагрузка на него
+    выводит:
+    форматированное содержание словаря в консоль
+    '''
     for finger, count in the_dict.items():
         print(f'{finger}: {count}')
     print('\n')
 
 
 def formated_hands_result_out(the_dict):
+    '''
+    получает:
+    словарь - 'рука': нагрузка на неё
+    выводит:
+    форматированное содержание словаря в консоль
+    '''
     for finger, count in the_dict.items():
         print(f'{finger}: {count}%')
     print('\n')
-
-
-def total_sum_of_dict_values(the_dict):
-    the_sum = 0
-    for value in the_dict.values():
-        the_sum += value
-    # return the_sum
-    print('количество одноручных двубуквенных сочетаний: ', the_sum, '\n\n')
 
 
 # функция визуализации результатов
@@ -153,7 +155,6 @@ def visualization(
     hh3 = list(hh3.values())
     hh4 = list(hh4.values())
 
-    # создаем фигуру с основным графиком и 4 круговыми диаграммами
     fig = plt.figure(figsize=(15, 7))
     grid = fig.add_gridspec(2, 4, height_ratios=[2, 1])
 
@@ -202,7 +203,8 @@ def visualization(
 
     # настройки и отображение
     fig.canvas.manager.set_window_title(
-        'Сбор статистики для оптимизации русских раскладок (величина штрафов и нагрузка на руки)')
+        'Сбор статистики для оптимизации русских раскладок\
+ (величина штрафов и нагрузка на руки)')
 
     plt.tight_layout()
     plt.show()
