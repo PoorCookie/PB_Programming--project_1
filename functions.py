@@ -11,7 +11,6 @@ def characters_in_file_counter(filenames):
     получает: названия файлов
     возвращает словари:
     chars - 'символ': количество повторений
-    words - 'слово': количество повторений
     '''
 
     chars = {}
@@ -99,22 +98,28 @@ def load_calculator(chars_dict, imported_layout_map, data):
 
 
 def formated_fingers_result_out(the_dict):
+    '''
+    получает:
+    словарь - 'палец': нагрузка на него
+    выводит:
+    форматированное содержание словаря в консоль
+    '''
     for finger, count in the_dict.items():
         print(f'{finger}: {count}')
     print('\n')
 
 
-# функция визуализации результатов
 def visualization(
         layout1, layout2, layout3, layout4, files):
+    '''
+    функция визуализации результатов
+    '''
 
     layout1 = list(layout1.values())
     layout2 = list(layout2.values())
     layout3 = list(layout3.values())
     layout4 = list(layout4.values())
 
-
-    # создаем фигуру с основным графиком и 4 круговыми диаграммами
     fig = plt.figure(figsize=(15, 7))
     grid = fig.add_gridspec()
 
@@ -150,7 +155,8 @@ def visualization(
 
     # настройки и отображение
     fig.canvas.manager.set_window_title(
-        'Сбор статистики для оптимизации русских раскладок (количество нажатий)')
+        'Сбор статистики для оптимизации русских раскладок\
+ (количество нажатий)')
 
     plt.tight_layout()
     plt.show()
