@@ -141,9 +141,11 @@ def formated_hands_result_out(the_dict):
     print('\n')
 
 
-# функция визуализации результатов
 def visualization(
         layout1, layout2, layout3, layout4, files, hh1, hh2, hh3, hh4):
+    '''
+    функция визуализации результатов
+    '''
 
     layout1 = list(layout1.values())
     layout2 = list(layout2.values())
