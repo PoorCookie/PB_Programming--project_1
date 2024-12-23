@@ -1,6 +1,6 @@
 '''
 main файл объединяющий все файлы
-в качестве аргумента через командную строку получает название файла
+в качестве аргумента через командную строку получает название файлов
 '''
 
 import sys
@@ -9,8 +9,9 @@ from functions import *
 
 
 if __name__ == "__main__":
+    filenames = sys.argv[1:]
     chars_dict = characters_in_file_counter(
-        sys.argv[1:])
+        filenames)
 
     # йцукен
     icuken_fdict = load_calculator(
@@ -37,4 +38,4 @@ if __name__ == "__main__":
     print('ДИКТОР:')
     formated_fingers_result_out(dictor_fdict)
     visualization(icuken_fdict, skoropis_fdict, vyzov_fdict, dictor_fdict,
-                  sys.argv[1:])
+                  filenames)
