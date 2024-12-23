@@ -142,7 +142,7 @@ def visualization(
                  layout4[i], bar_width, label='Диктор'
                  if i == 0 else '', color=['#b60aff'], alpha=1.0)
 
-    ax1.set_xlabel('')
+    ax1.set_xlabel('Количество нажатий')
     ax1.set_title('Анализ на основе файлов: ' + ', '.join(files))
     ax1.set_yticks(index)
     ax1.set_yticklabels(fingers)
