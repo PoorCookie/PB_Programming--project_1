@@ -1,6 +1,7 @@
 '''
 подключаемый файл с функциями,
-необходимыми для подсчёта символов в файле, нагрузки на пальцы
+необходимыми для подсчёта символов в файле,
+нагрузки на пальцы, визуализации результатов
 '''
 import matplotlib.pyplot as plt
 import numpy as np
@@ -58,12 +59,10 @@ def combos_counter(words_dict, max_combos_length):
     '''
     получает:
     словарь - 'слово': количество повторений
-    словарь - 'символ': 'сканкод клавиши'
-    словарь - 'рука': 'скандкод клавиши'
+    переменная - максимальная длина комбинации
     возвращает:
-    словарь 'two_letters' - 'комбинация из 2х букв': количество потворений
+    словарь 'combos' - 'длина комбинации': 'комбинация': количество потворений
     '''
-    # combo_temp = ''
     combos = {}
     for current_combos_length in range(2, max_combos_length + 1):
         combos[current_combos_length] = {}
@@ -90,10 +89,13 @@ def conditional_combos_counter(
     получает:
     словарь - 'комбинация из 2х букв': количество повторений
     словарь - 'символ': 'сканкод клавиши'
-    словарь - 'рука': 'скандкод клавиши'
-    возвращает: словарь
-    'two_letters_one_hand_combos' - 'комбинация из 2х букв':
-    количество потворений
+    файл со словарями соответствия сканкодов - цены/пальца
+    переменная - максимальная длина комбинации
+    возвращает:
+    словарь 'za_hando' - длина комбинации: 'комбинация': количество потворений
+    ^для одноручных комбинаций
+    словарь 'comfort' - длина комбинации: 'комбинация': количество потворений
+    ^для одноручных удобных комбинаций
     '''
     za_hando = {}
     comfort = {}
@@ -162,10 +164,6 @@ def scancode_from_char(char, the_dict):
         if char == key:
             return scancode[0]
 
-# def two_letters_scancodes_vychytator(letter1, letter2, imported_layout_map):
-# return int(scancode_from_char(letter1, imported_layout_map)) -
-# int(scancode_from_char(letter2, imported_layout_map))
-
 
 def load_calculator(chars_dict, imported_layout_map, data):
     '''
@@ -174,6 +172,7 @@ def load_calculator(chars_dict, imported_layout_map, data):
     словарь - 'символ': 'сканкод клавиши'
     файл со словарями соответствия сканкодов - цены/пальца
     возвращает: словарь 'final_fingers_load' - 'палец': нагрузка
+    словарь 'final_hands_load' - 'рука': нагрузка
     '''
 
     # возвращаемый словарь
@@ -234,18 +233,37 @@ def load_calculator(chars_dict, imported_layout_map, data):
 
 
 def formated_fingers_result_out(the_dict):
+    '''
+    получает:
+    словарь - 'палец': нагрузка на него
+    выводит:
+    форматированное содержание словаря в консоль
+    '''
     for finger, count in the_dict.items():
         print(f'{finger}: {count}')
     print('\n')
 
 
 def formated_hands_result_out(the_dict):
+    '''
+    получает:
+    словарь - 'рука': нагрузка на неё
+    выводит:
+    форматированное содержание словаря в консоль
+    '''
     for finger, count in the_dict.items():
         print(f'{finger}: {count}%')
     print('\n')
 
 
 def combos_dict_to_combos_count_dict(hand_combos, comfort_combos):
+    '''
+    получает:
+    словарь - 'рука': нагрузка на неё
+    выводит:
+    словарь 'hand_combos_count' - длина комбо: количество
+    словарь 'comfort_combos_count' - длина комбо: количество
+    '''
     hand_combos_count, comfort_combos_count = {}, {}
     for combos_length, combos in hand_combos.items():
         hand_combos_count[combos_length] = 0
@@ -260,6 +278,15 @@ def combos_dict_to_combos_count_dict(hand_combos, comfort_combos):
 
 
 def formated_combos_results_out(hand_combos_count, comfort_combos_count):
+    '''
+    получает:
+    словарь - длина комбо: количество
+    ^для одноручных комбинаций
+    словарь - длина комбо: количество
+    ^для одноручных удобных комбинаций
+    выводит:
+    форматированное содержание словаря в консоль
+    '''
     for (combos_length, count1), (count2) in zip(
             hand_combos_count.items(), comfort_combos_count.values()):
         print(f'буквенных сочетаний длины {combos_length}:')
@@ -267,18 +294,12 @@ def formated_combos_results_out(hand_combos_count, comfort_combos_count):
     print('\n\n\n\n')
 
 
-def total_sum_of_dict_values(the_dict):
-    the_sum = 0
-    for value in the_dict.values():
-        the_sum += value
-    # return the_sum
-    print('количество одноручных двубуквенных сочетаний: ', the_sum, '\n\n')
-
-
-# функция визуализации результатов
 def visualization(
         layout1, layout2, layout3, layout4, files, hh1, hh2, hh3, hh4, dict1,
         dict2, dict3, dict4, dict5, dict6, dict7, dict8):
+    '''
+    функция визуализации результатов
+    '''
 
     layout1 = list(layout1.values())
     layout2 = list(layout2.values())
@@ -290,7 +311,6 @@ def visualization(
     hh3 = list(hh3.values())
     hh4 = list(hh4.values())
 
-    # создаем фигуру с основным графиком и 4 круговыми диаграммами
     fig = plt.figure(figsize=(15, 7))
     grid = fig.add_gridspec(2, 4, height_ratios=[2, 1])
 
@@ -342,11 +362,10 @@ def visualization(
         'Сбор статистики для оптимизации русских раскладок')
 
     # второе окно
-    # Цвета для гистограммы
+    # цвета для гистограммы
     colors = ['#ff3333', '#99ff33', '#0077ff', '#b60aff']
     labels = ['Йцукен', 'Скоропис', 'Вызов', 'Диктор']
 
-    # Собираем данные в список для первой и второй гистограммы
     data_left = [dict1, dict2, dict3, dict4]
     data_right = [dict5, dict6, dict7, dict8]
 
@@ -354,14 +373,14 @@ def visualization(
         max(d.values()) for d in data_left + data_right
     )
 
-    # Индексы для столбиков
+    # индексы для столбиков
     index = np.arange(len(dict1))  # Количество элементов в каждом словаре
     bar_width = 0.2  # Ширина столбиков
 
-    # Создаем фигуру с двумя осями (левая и правая гистограммы)
+    # создание фигуры с двумя осями (левая и правая гистограммы)
     fig1, (ax_left, ax_right) = plt.subplots(1, 2, figsize=(12, 6))
 
-    # Построение гистограмм для левой части
+    # построение гистограмм для левой части
     for i, d in enumerate(data_left):
         values = list(d.values())
         ax_left.barh(
@@ -371,7 +390,7 @@ def visualization(
             label=labels[i],
             height=bar_width)
 
-    # Построение гистограмм для правой части
+    # построение гистограмм для правой части
     for i, d in enumerate(data_right):
         values = list(d.values())
         ax_right.barh(
@@ -381,32 +400,28 @@ def visualization(
             label=labels[i],
             height=bar_width)
 
-    # Настройка осей
+    # настройка осей
     ax_left.set_xlabel('Количество сочетаний')
     ax_left.set_ylabel('Длина сочетания')
     ax_right.set_xlabel('Количество сочетаний')
     ax_right.set_ylabel('Длина сочетания')
 
-    # Настройка положения меток на оси Y для обеих гистограмм
+    # настройка положения меток на оси Y для обеих гистограмм
     ax_left.set_yticks(index + bar_width * (len(data_left) - 1) / 2)
     ax_left.set_yticklabels(list(dict1.keys()))
     ax_right.set_yticks(index + bar_width * (len(data_right) - 1) / 2)
     ax_right.set_yticklabels(list(dict5.keys()))
 
-    # Добавление подписей под гистограммами
+    # добавление подписей под гистограммами
     ax_left.set_title('Одноручные сочетания', fontsize=14)
     ax_right.set_title('Одноручные удобные сочетания', fontsize=14)
 
-    # Перемещение легенды в нижнюю часть окна
-    # ax_left.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, -0.15))
-    # ax_right.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, -0.15))
-
-    # Инвертирование оси Y для обеих гистограмм (чтобы столбики шли снизу
+    # инвертирование оси Y для обеих гистограмм (чтобы столбики шли снизу
     # вверх)
     ax_left.invert_yaxis()
     ax_right.invert_yaxis()
 
-    # Устанавливаем одинаковый предел для оси X для обеих гистограмм
+    # устанавливаем одинаковый предел для оси X для обеих гистограмм
     ax_left.set_xlim(0, max_value)
     ax_right.set_xlim(0, max_value)
 
