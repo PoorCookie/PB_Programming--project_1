@@ -1,6 +1,7 @@
 '''
 подключаемый файл с функциями,
-необходимыми для подсчёта символов в файле, нагрузки на пальцы
+необходимыми для подсчёта символов в файле,
+нагрузки на пальцы, визуализации результатов
 '''
 import matplotlib.pyplot as plt
 import numpy as np
@@ -99,22 +100,28 @@ def load_calculator(chars_dict, imported_layout_map, data):
 
 
 def formated_fingers_result_out(the_dict):
+    '''
+    получает:
+    словарь - 'палец': нагрузка на него
+    выводит:
+    форматированное содержание словаря в консоль
+    '''
     for finger, count in the_dict.items():
         print(f'{finger}: {count}')
     print('\n')
 
 
-# функция визуализации результатов
 def visualization(
         layout1, layout2, layout3, layout4, files):
+    '''
+    функция визуализации результатов
+    '''
 
     layout1 = list(layout1.values())
     layout2 = list(layout2.values())
     layout3 = list(layout3.values())
     layout4 = list(layout4.values())
 
-
-    # создаем фигуру с основным графиком и 4 круговыми диаграммами
     fig = plt.figure(figsize=(15, 7))
     grid = fig.add_gridspec()
 
