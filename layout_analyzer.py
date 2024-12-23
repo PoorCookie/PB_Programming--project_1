@@ -1,6 +1,6 @@
 '''
 main файл объединяющий все файлы
-в качестве аргумента через командную строку получает название файла
+в качестве аргумента через командную строку получает название файлов
 '''
 
 import sys
@@ -9,8 +9,9 @@ from functions import *
 
 
 if __name__ == "__main__":
+    filenames = sys.argv[1:-1]
     chars_dict, words_dict = characters_and_words_in_file_counter(
-        sys.argv[1:-1])
+        filenames)
     max_combos_length = int(sys.argv[-1])
     combos = combos_counter(words_dict, max_combos_length)
     # йцукен
@@ -58,7 +59,7 @@ if __name__ == "__main__":
     formated_hands_result_out(dictor_hdict)
     formated_combos_results_out(dictor_combos_h, dictor_combos_c)
     visualization(icuken_fdict, skoropis_fdict, vyzov_fdict, dictor_fdict,
-                  sys.argv[1:-1], icuken_hdict, skoropis_hdict, vyzov_hdict,
+                  filenames, icuken_hdict, skoropis_hdict, vyzov_hdict,
                   dictor_hdict, icuken_combos_h, skoropis_combos_h,
                   vyzov_combos_h, dictor_combos_h, icuken_combos_c,
                   skoropis_combos_c, vyzov_combos_c, dictor_combos_c)
