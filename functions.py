@@ -64,8 +64,8 @@ def load_calculator(chars_dict, imported_layout_map, data):
         'lfi4': 0,
         'lfi3': 0,
         'lfi2': 0,
-        'lfi1': 0,
-        'rfi1': 0,
+        # 'lfi1': 0,
+        # 'rfi1': 0,
         'rfi2': 0,
         'rfi3': 0,
         'rfi4': 0,
@@ -122,27 +122,26 @@ def visualization(
     ax1 = fig.add_subplot(grid[0, :])
 
     fingers = ['П Мизинец', 'П Безымянный', 'П Средний',
-               'П Указательный', 'П Большой', 'Л большой',
-               'Л Указательный', 'Л Средний', 'Л Безымянный',
-               'Л Мизинец']
+               'П Указательный', 'Л Указательный',
+               'Л Средний', 'Л Безымянный', 'Л Мизинец']
     index = np.arange(len(fingers))
     bar_width = 0.2
 
     for i in range(len(fingers)):
-        ax1.barh(index[9 - i] + bar_width * 1.5,
+        ax1.barh(index[7 - i] + bar_width * 1.5,
                  layout1[i], bar_width, label='Йцукен'
                  if i == 0 else '', color=['#ff3333'], alpha=1.0)
-        ax1.barh(index[9 - i] + bar_width * 0.5,
+        ax1.barh(index[7 - i] + bar_width * 0.5,
                  layout2[i], bar_width, label='Скоропис'
                  if i == 0 else '', color=['#99ff33'], alpha=1.0)
-        ax1.barh(index[9 - i] - bar_width * 0.5,
+        ax1.barh(index[7 - i] - bar_width * 0.5,
                  layout3[i], bar_width, label='Вызов'
                  if i == 0 else '', color=['#0077ff'], alpha=1.0)
-        ax1.barh(index[9 - i] - bar_width * 1.5,
+        ax1.barh(index[7 - i] - bar_width * 1.5,
                  layout4[i], bar_width, label='Диктор'
                  if i == 0 else '', color=['#b60aff'], alpha=1.0)
 
-    ax1.set_xlabel('')
+    ax1.set_xlabel('Величина штрафа')
     ax1.set_title('Анализ на основе файлов: ' + ', '.join(files))
     ax1.set_yticks(index)
     ax1.set_yticklabels(fingers)
@@ -150,7 +149,7 @@ def visualization(
 
     # настройки и отображение
     fig.canvas.manager.set_window_title(
-        'Сбор статистики для оптимизации русских раскладок (количество нажатий)')
+        'Сбор статистики для оптимизации русских раскладок (величина штрафов)')
 
     plt.tight_layout()
     plt.show()
