@@ -311,5 +311,4 @@ def visualization(
 
     ax_right2.legend(loc='upper right')
 
-    plt.tight_layout()
     plt.show()
